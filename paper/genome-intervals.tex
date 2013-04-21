@@ -207,7 +207,7 @@ To illustrate the problem, consider basic biological questions such as
   across all sequenced eukaryotes?} and \emph{what is the ratio of
   SNPs in coding regions vs those in UTRs?} These are reasonable
 questions that turn out to be difficult to answer without recourse to
-the unoptimal solution of writing programs to obtain the answers. One
+the suboptimal solution of writing programs to obtain the answers. One
 reason existing databases have problems answering these questions is
 that they are each inconsistent in what information is represented and
 what information must be derived algorithmically. A collection of
@@ -391,6 +391,12 @@ assumes continuous intervals, rather than discrete intervals.
 %that is, having a sub-interval in common is captured by $o \cup f \cup
 %d \cup s \cup e \cup oi \cup fi \cup di \cup si$.
 
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\subsection{Outline}
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+TODO
+
 % ========================================
 \section{Results}
 % ========================================
@@ -410,11 +416,13 @@ definitions.
 
 When considering the biological meaning of these relations, it is
 important to stress that they hold between {\em sequences} or
-\emph{sequence intervals} (i.e. primary structures) and not the molecules that are the bearers
-of those sequences. For example, an RNA molecule or intron may exhibit
-connectedness/adjacency between bases at the secondary structure
-level. We consider these to be non-adjacent and disconnected at the
-sequence level. 
+\emph{sequence intervals} (i.e. primary structures) and not the
+molecules that are the bearers of those sequences. For example, an RNA
+molecule or intron may exhibit connectedness/adjacency between bases
+at the secondary structure level. Similarly, a transcription factor
+protein may exhibit binding between its amino acid chain and the DNA
+sequence upstream of a gene. We consider both these cases to be
+non-adjacent and disconnected at the sequence level.
 
 The core of the GIA consists of 16 basic relations $R^{16}$ that can hold
 between any two intervals on the same strand of a sequence, defined in
@@ -445,8 +453,9 @@ simplified example.
 \subsubsection{Basic single-strand relations}
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-We have declared 15 interval relations that can hold between two intervals on the same strand of a sequence, show in table
-\ref{tab:relations}. 
+We have declared 16 interval relations that can hold between two
+intervals on the same strand of a sequence. These are shown in table
+\ref{tab:relations}.
 
 \begin{table}
 \begin{tabular}{ | p{5mm} | p{3cm} | p{3cm} | p{3cm} | }
@@ -476,7 +485,7 @@ $c$ & \containedBy {} & $c$ \includegraphics[height=1.2cm]{p} &  $c-$ \small{\co
 \end{tabular}
 \caption{16 Core Relations in the Genome Interval Algebra. Glyphs depict
   the relation holding between A and B, with the strand indicated by an arrow.
-  This table provides definitions based on Allen relations. We provide both human-friendly names (e.g. upstream of) and mnemonics (e.g. uo) }
+  This table provides definitions based on Allen relations. We provide both human-friendly names (e.g. \upstreamOf) and mnemonics (e.g. $u$) }
 \label{tab:relations}
 \end{table}
 
@@ -506,7 +515,7 @@ how it is defined in the Relation Ontology.
 
 We also provide definitions for all interval relations in terms of
 point-positions or junctions. We define a \emph{proper junction} as a
-discrete point connecting two nuclotide bases. Junctions are the union
+discrete point connecting two nucleotide bases. Junctions are the union
 of proper junctions and the outermost boundary points of a sequence
 (this inclusive definition of junction simplifies the axioms).
 
@@ -640,14 +649,15 @@ In table \ref{tab:RCrelations} we show only one \rc\ relation,
 figure \ref{fig:relations-examples} for an illustration of why this is
 the case.
 
-For any $r \in R^{16}$, we can further define a relation $r^{U} = r \cup r^{R}$. Table
-\ref{tab:RCrelations} illustrates this with $\upstreamOverlapsRC \cup
-\upstreamOverlaps$ which we call this \upstreamOverlapsU. Arguably
-these union relations actually represent the common use cases
-(e.g. Region-of-Interest queries in Genome
-Browsers\cite{Stein2002}\cite{Lewis2002}), so we should have intuitive
-names for them. However, from the point of view of axiomatisation, it
-is simpler to treat these as derived rather than basic relations.
+For any $r \in R^{16}$, we can further define a relation $r^{U} = r
+\cup r^{R}$. Table \ref{tab:RCrelations} illustrates this with
+$\upstreamOverlapsRC \cup \upstreamOverlaps$ which we call this
+\upstreamOverlapsU.  These union relations correspond to
+common use cases (e.g. Region-of-Interest queries in Genome
+Browsers\cite{Stein2002}\cite{skinner2009jbrowse}\cite{Lewis2002}), so
+we should have intuitive names for them. However, from the point of
+view of axiomatisation, it is simpler to treat these as derived rather
+than basic relations.
 
 Thus we have 16 relations in the core set (including inverse relations
 for non-symmetric relations).  We declare relations for this core set,
@@ -667,7 +677,7 @@ $uo^R$ \upstreamOverlapsRC  {} \includegraphics[height=1.2cm]{uoR} & $\alpha(x)<
 $uo^*$ \upstreamOverlapsU   & $uo^R \cup uo$ & $uo^R \cup do$ \\
 \hline
 \end{tabular}
-\caption{Example of Reverse Complementation cognate relations for the \upstreamOverlaps relation. Note the interaction between RC and inverse relations: in particular the inverse of $uo^R$ does not correspond to a single named relation. }
+\caption{Example of Reverse Complementation cognate relations for the \upstreamOverlaps\ relation. Note the interaction between RC and inverse relations: in particular the inverse of $uo^R$ does not correspond to a single named relation. }
 \label{tab:RCrelations}
 \end{table}
 
@@ -675,35 +685,38 @@ $uo^*$ \upstreamOverlapsU   & $uo^R \cup uo$ & $uo^R \cup do$ \\
 \subsubsection{Operations over collections of intervals}
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Neither RCC-8 not AIA dictate operations over \emph{collections} of regions
+Many genomic features correspond to \emph{collection} of intervals on
+a sequence - for example, the coding part of a multi-exon gene.
+Neither RCC-8 not AIA dictate operations over collections of regions
 or intervals. We propose a simple extension in GIA for dealing with
 such collections.
 
-We use the same relations as for single intervals, but we must be
-careful how we define them. We can also define new relations that are
-only applicable to collections. For example, in figure
+We overload the relations that are used for single intervals, but
+provide distinct definitions. We also define new relations that
+are only applicable to collections. For example, in figure
 \ref{fig:relations-examples} genes A and B stand in an $o^{R}$
 (overlaps) relation, even though their respective exons share no
-bases. However, we can introduce a new relation \interleavesR,
-defined such that the exons in gene A interleave (on the opposite
-strand) the exons in gene B. (note that it is important that we
-distinguish between the sets of exons interleaving and the genes
-overlapping).
+bases. However, we can introduce a new relation \interleavesR, defined
+such that the exons in gene A interleave (on the opposite strand) the
+exons in gene B. (note that it is important that we distinguish
+between the sets of exons interleaving and the genes overlapping).
 
-We present here a subset of the full set of relations, which have not
-yet been finalized. We treat each collection as a set of intervals.
+We present here a subset of the full set of relations, which have yet
+to be finalized. We treat each collection as a set of intervals.
 
-Overlaps must hold for all elements in both intervals:
+Overlaps must hold for some pair of elements from each pair:
 
-$$\overlaps(X,Y) \dimp \E (x \in X,y \in Y) : \overlaps(x,y) $$
+$$\overlaps(X,Y) \dimp \E x,y : x \in X \con y \in Y \con \overlaps(x,y) $$
 
 Adjacency must hold of any one pair, and in addition there should be no overlap:
 
-$$\adjacentTo(X,Y) \dimp \E (x \in X,y \in Y) : \adjacentTo(x, y) \con \n \overlaps(X,Y)$$
+$$\adjacentTo(X,Y) \dimp \E x,y : x \in X \con y \in Y \con \adjacentTo(x, y) \con \n \overlaps(X,Y)$$
 
 Upstream must hold for all elements:
 
-$$\upstreamOf(X,Y) \dimp \A (x \in X, y \in Y) : \upstreamOf(x,y)$$
+$$\upstreamOf(X,Y) \dimp \A x,y : (x \in X \con y \in Y \imp \upstreamOf(x,y) )$$
+
+Interleaves is more complex:
 
 \begin{equation*}\begin{split}
 \interleaves^{R}(X,Y) & \dimp \E (x_1 \in ,x_2 \in X,y_1 \in Y,y_2 \in Y) : \\
@@ -750,6 +763,7 @@ $$
 The full composition table was derived by an automated theorem prover (see methods).
 
 %[Include proofs from Prover9?]
+
 
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 \subsection{Extending the Sequence Ontology}
@@ -1070,12 +1084,12 @@ formalizing the definition for this using the \upstreamAdjacentTo\ and
 \downstreamAdjacentTo\ relations to represent \emph{bounded on either
   side} we realized that this definition excluded the two regions on
 either end of a chromosome. The textual definition was extended to be
-include the disjunctive clause \emph{or bounded by a gene and the end
-  of the chromosome}. Another example was \spliceSite, which had a
-textual definition indicating that it was a junction but a placement
-in the \isA hierarchy indication a region. Once the computable
-definition was added, the inconsistency could be detected by a
-reasoner (although it was in fact detected whilst preparing the
+include the disjunctive clause \emph{or bounded by either a gene or
+  the end of the chromosome}. Another example was \spliceSite, which
+had a textual definition indicating that it was a junction but a
+placement in the \isA hierarchy indication a region. Once the
+computable definition was added, the inconsistency could be detected
+by a reasoner (although it was in fact detected whilst preparing the
 logical definition). This resulted in the definition being clarified
 and the addition of a new term \spliceJunction.
 
@@ -1086,7 +1100,7 @@ and the addition of a new term \spliceJunction.
 Our formulation is a junction or \emph{interbase} one. We could
 equally have defined interval relations in terms of the bases
 themselves. We consider an interbase system to have a slight advantage
-in terms of simplicit of representation of positioning of splice
+in terms of simplicity of representation of positioning of splice
 junctions, insertion regions and so on. However, the two systems would
 be equivalent in terms of expressivity, so the choice of one over the
 other is arbitrary.
@@ -1112,11 +1126,12 @@ relations such that it is possible to state \rel{\exon\ \adjacentTo\
 
 \subsubsection{Circular genomes}
 
-At this time we do not properly account for circular genomes. One
-approach is to weaken the definition of $<$ such that it is reflexive
-on circular genomes. However, this will have some consequences for the
-other axioms, which needs to be fully worked out. For example, every
-feature would be upstream of every other feature.
+The current axiomatization needs to be modified to handle circular
+genomes. One approach is to weaken the definition of $<$ such that it
+is reflexive on circular genomes. However, this will have some
+consequences for the other axioms, which needs to be fully worked
+out. For example, every feature would be upstream of every other
+feature.
 
 Another solution would be to have some kind of probabilistic metric or
 arbitrary cut-off, whereby junctions are no longer considered upstream
