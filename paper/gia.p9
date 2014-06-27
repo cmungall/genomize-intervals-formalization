@@ -1,0 +1,242 @@
+formulas(sos).
+% functional(starts_on)
+(starts_on2(x,y) & starts_on2(x,z) -> equivalent2(y,z)).
+
+% functional(starts_on)
+(starts_on3(x,y,t) & starts_on3(x,z,t) -> equivalent2(y,z)).
+
+% transitive(coextensive_with)
+(coextensive_with2(x,y) & coextensive_with2(y,z) -> coextensive_with2(x,z)).
+
+% transitive(upstream_of)
+(upstream_of2(x,y) & upstream_of2(y,z) -> upstream_of2(x,z)).
+
+% transitive(downstream_of)
+(downstream_of2(x,y) & downstream_of2(y,z) -> downstream_of2(x,z)).
+
+% transitive(contained_by)
+(contained_by2(x,y) & contained_by2(y,z) -> contained_by2(x,z)).
+
+% transitive(before)
+(before2(x,y) & before2(y,z) -> before2(x,z)).
+
+% transitive(immediately_before)
+(immediately_before2(x,y) & immediately_before2(y,z) -> immediately_before2(x,z)).
+
+% transitive(after)
+(after2(x,y) & after2(y,z) -> after2(x,z)).
+
+% transitive(starts_on_start_of)
+(starts_on_start_of2(x,y) & starts_on_start_of2(y,z) -> starts_on_start_of2(x,z)).
+
+% transitive(ends_on_end_of)
+(ends_on_end_of2(x,y) & ends_on_end_of2(y,z) -> ends_on_end_of2(x,z)).
+
+% transitive(coextensive_with)
+(coextensive_with3(x,y,t) & coextensive_with3(y,z,t) -> coextensive_with3(x,z,t)).
+
+% transitive(upstream_of)
+(upstream_of3(x,y,t) & upstream_of3(y,z,t) -> upstream_of3(x,z,t)).
+
+% transitive(downstream_of)
+(downstream_of3(x,y,t) & downstream_of3(y,z,t) -> downstream_of3(x,z,t)).
+
+% transitive(contained_by)
+(contained_by3(x,y,t) & contained_by3(y,z,t) -> contained_by3(x,z,t)).
+
+% transitive(before)
+(before3(x,y,t) & before3(y,z,t) -> before3(x,z,t)).
+
+% transitive(immediately_before)
+(immediately_before3(x,y,t) & immediately_before3(y,z,t) -> immediately_before3(x,z,t)).
+
+% transitive(after)
+(after3(x,y,t) & after3(y,z,t) -> after3(x,z,t)).
+
+% transitive(starts_on_start_of)
+(starts_on_start_of3(x,y,t) & starts_on_start_of3(y,z,t) -> starts_on_start_of3(x,z,t)).
+
+% transitive(ends_on_end_of)
+(ends_on_end_of3(x,y,t) & ends_on_end_of3(y,z,t) -> ends_on_end_of3(x,z,t)).
+
+% subrelation(coextensive_with, overlaps)
+(coextensive_with3(x,y,t) -> overlaps3(x,y,t)).
+
+% subrelation(immediately_before, before)
+(immediately_before3(x,y,t) -> before3(x,y,t)).
+
+% subrelation(coextensive_with, overlaps)
+(coextensive_with2(x,y) -> overlaps2(x,y)).
+
+% subrelation(immediately_before, before)
+(immediately_before2(x,y) -> before2(x,y)).
+
+% holds_over_chain(upstream_of, ends_before_or_on, start_of)
+(ends_before_or_on3(x,y,t) & start_of3(y,z,t) -> upstream_of3(x,z,t)).
+
+% holds_over_chain(downstream_of, starts_after_or_on, end_of)
+(starts_after_or_on3(x,y,t) & end_of3(y,z,t) -> downstream_of3(x,z,t)).
+
+% holds_over_chain(upstream_adjacent_to, ends_on, start_of)
+(ends_on3(x,y,t) & start_of3(y,z,t) -> upstream_adjacent_to3(x,z,t)).
+
+% holds_over_chain(upstream_adjacent_to, finishes, upstream_adjacent_to)
+(finishes3(x,y,t) & upstream_adjacent_to3(y,z,t) -> upstream_adjacent_to3(x,z,t)).
+
+% holds_over_chain(upstream_adjacent_to, upstream_adjacent_to, started_by)
+(upstream_adjacent_to3(x,y,t) & started_by3(y,z,t) -> upstream_adjacent_to3(x,z,t)).
+
+% holds_over_chain(downstream_adjacent_to, starts_on, end_of)
+(starts_on3(x,y,t) & end_of3(y,z,t) -> downstream_adjacent_to3(x,z,t)).
+
+% holds_over_chain(downstream_adjacent_to, starts, downstream_adjacent_to)
+(starts3(x,y,t) & downstream_adjacent_to3(y,z,t) -> downstream_adjacent_to3(x,z,t)).
+
+% holds_over_chain(downstream_adjacent_to, downstream_adjacent_to, finished_by)
+(downstream_adjacent_to3(x,y,t) & finished_by3(y,z,t) -> downstream_adjacent_to3(x,z,t)).
+
+% holds_over_chain(overlaps, contains, contained_by)
+(contains3(x,y,t) & contained_by3(y,z,t) -> overlaps3(x,z,t)).
+
+% holds_over_chain(ends_before, ends_on, before)
+(ends_on3(x,y,t) & before3(y,z,t) -> ends_before3(x,z,t)).
+
+% holds_over_chain(ends_before_or_on, ends_on, before_or_on)
+(ends_on3(x,y,t) & before_or_on3(y,z,t) -> ends_before_or_on3(x,z,t)).
+
+% holds_over_chain(starts_after, has_start, after)
+(has_start3(x,y,t) & after3(y,z,t) -> starts_after3(x,z,t)).
+
+% holds_over_chain(starts_after_or_on, has_start, after_or_on)
+(has_start3(x,y,t) & after_or_on3(y,z,t) -> starts_after_or_on3(x,z,t)).
+
+% holds_over_chain(starts_on_start_of, has_start, start_of)
+(has_start3(x,y,t) & start_of3(y,z,t) -> starts_on_start_of3(x,z,t)).
+
+% holds_over_chain(ends_on_end_of, ends_on, end_of)
+(ends_on3(x,y,t) & end_of3(y,z,t) -> ends_on_end_of3(x,z,t)).
+
+% holds_over_chain(ends_before_end_of, ends_before, end_of)
+(ends_before3(x,y,t) & end_of3(y,z,t) -> ends_before_end_of3(x,z,t)).
+
+% holds_over_chain(starts_after_start_of, starts_after, start_of)
+(starts_after3(x,y,t) & start_of3(y,z,t) -> starts_after_start_of3(x,z,t)).
+
+% holds_over_chain(starts_after_start_of, finishes, upstream_adjacent_to)
+(finishes3(x,y,t) & upstream_adjacent_to3(y,z,t) -> starts_after_start_of3(x,z,t)).
+
+% holds_over_chain(upstream_of, ends_before_or_on, start_of)
+(ends_before_or_on2(x,y) & start_of2(y,z) -> upstream_of2(x,z)).
+
+% holds_over_chain(downstream_of, starts_after_or_on, end_of)
+(starts_after_or_on2(x,y) & end_of2(y,z) -> downstream_of2(x,z)).
+
+% holds_over_chain(upstream_adjacent_to, ends_on, start_of)
+(ends_on2(x,y) & start_of2(y,z) -> upstream_adjacent_to2(x,z)).
+
+% holds_over_chain(upstream_adjacent_to, finishes, upstream_adjacent_to)
+(finishes2(x,y) & upstream_adjacent_to2(y,z) -> upstream_adjacent_to2(x,z)).
+
+% holds_over_chain(upstream_adjacent_to, upstream_adjacent_to, started_by)
+(upstream_adjacent_to2(x,y) & started_by2(y,z) -> upstream_adjacent_to2(x,z)).
+
+% holds_over_chain(downstream_adjacent_to, starts_on, end_of)
+(starts_on2(x,y) & end_of2(y,z) -> downstream_adjacent_to2(x,z)).
+
+% holds_over_chain(downstream_adjacent_to, starts, downstream_adjacent_to)
+(starts2(x,y) & downstream_adjacent_to2(y,z) -> downstream_adjacent_to2(x,z)).
+
+% holds_over_chain(downstream_adjacent_to, downstream_adjacent_to, finished_by)
+(downstream_adjacent_to2(x,y) & finished_by2(y,z) -> downstream_adjacent_to2(x,z)).
+
+% holds_over_chain(overlaps, contains, contained_by)
+(contains2(x,y) & contained_by2(y,z) -> overlaps2(x,z)).
+
+% holds_over_chain(ends_before, ends_on, before)
+(ends_on2(x,y) & before2(y,z) -> ends_before2(x,z)).
+
+% holds_over_chain(ends_before_or_on, ends_on, before_or_on)
+(ends_on2(x,y) & before_or_on2(y,z) -> ends_before_or_on2(x,z)).
+
+% holds_over_chain(starts_after, has_start, after)
+(has_start2(x,y) & after2(y,z) -> starts_after2(x,z)).
+
+% holds_over_chain(starts_after_or_on, has_start, after_or_on)
+(has_start2(x,y) & after_or_on2(y,z) -> starts_after_or_on2(x,z)).
+
+% holds_over_chain(starts_on_start_of, has_start, start_of)
+(has_start2(x,y) & start_of2(y,z) -> starts_on_start_of2(x,z)).
+
+% holds_over_chain(ends_on_end_of, ends_on, end_of)
+(ends_on2(x,y) & end_of2(y,z) -> ends_on_end_of2(x,z)).
+
+% holds_over_chain(ends_before_end_of, ends_before, end_of)
+(ends_before2(x,y) & end_of2(y,z) -> ends_before_end_of2(x,z)).
+
+% holds_over_chain(starts_after_start_of, starts_after, start_of)
+(starts_after2(x,y) & start_of2(y,z) -> starts_after_start_of2(x,z)).
+
+% holds_over_chain(starts_after_start_of, finishes, upstream_adjacent_to)
+(finishes2(x,y) & upstream_adjacent_to2(y,z) -> starts_after_start_of2(x,z)).
+
+% equivalent_to(adjacent_to, union_of(downstream_adjacent_to, upstream_adjacent_to))
+(adjacent_to2(x,y) <-> downstream_adjacent_to2(x,y) | upstream_adjacent_to2(x,y)).
+
+% equivalent_to(after_or_on, union_of(after, equivalent_junction_to))
+(after_or_on2(x,y) <-> after2(x,y) | equivalent_junction_to2(x,y)).
+
+% equivalent_to(before_or_on, union_of(before, equivalent_junction_to))
+(before_or_on2(x,y) <-> before2(x,y) | equivalent_junction_to2(x,y)).
+
+% equivalent_to(ends_before_end_of, union_of(upstream_of, upstream_overlaps))
+(ends_before_end_of2(x,y) <-> upstream_of2(x,y) | upstream_overlaps2(x,y)).
+
+% equivalent_to(ends_before_or_on, union_of(ends_before, ends_on))
+(ends_before_or_on2(x,y) <-> ends_before2(x,y) | ends_on2(x,y)).
+
+% equivalent_to(ends_on_end_of, union_of(coextensive_with, finished_by, finishes))
+(ends_on_end_of2(x,y) <-> coextensive_with2(x,y) | finished_by2(x,y) | finishes2(x,y)).
+
+% equivalent_to(overlaps, union_of(coextensive_with, downstream_overlaps, finished_by, finishes, started_by, starts, upstream_overlaps))
+(overlaps2(x,y) <-> coextensive_with2(x,y) | downstream_overlaps2(x,y) | finished_by2(x,y) | finishes2(x,y) | started_by2(x,y) | starts2(x,y) | upstream_overlaps2(x,y)).
+
+% equivalent_to(starts_after_or_on, union_of(starts_after, starts_on))
+(starts_after_or_on2(x,y) <-> starts_after2(x,y) | starts_on2(x,y)).
+
+% equivalent_to(starts_after_start_of, union_of(downstream_of, downstream_overlaps))
+(starts_after_start_of2(x,y) <-> downstream_of2(x,y) | downstream_overlaps2(x,y)).
+
+% equivalent_to(starts_on_start_of, union_of(coextensive_with, started_by, starts))
+(starts_on_start_of2(x,y) <-> coextensive_with2(x,y) | started_by2(x,y) | starts2(x,y)).
+
+% equivalent_to(coextensive_with, intersection_of(ends_on_end_of, starts_on_start_of))
+(coextensive_with2(x,y) <-> ends_on_end_of2(x,y) & starts_on_start_of2(x,y)).
+
+% equivalent_to(contained_by, intersection_of(ends_before_end_of, starts_after_start_of))
+(contained_by2(x,y) <-> ends_before_end_of2(x,y) & starts_after_start_of2(x,y)).
+
+% equivalent_to(downstream_adjacent_to, intersection_of(adjacent_to, downstream_of))
+(downstream_adjacent_to2(x,y) <-> adjacent_to2(x,y) & downstream_of2(x,y)).
+
+% equivalent_to(downstream_overlaps, intersection_of(overlaps, upstream_of))
+(downstream_overlaps2(x,y) <-> overlaps2(x,y) & upstream_of2(x,y)).
+
+% equivalent_to(finishes, intersection_of(ends_on_end_of, starts_after_start_of))
+(finishes2(x,y) <-> ends_on_end_of2(x,y) & starts_after_start_of2(x,y)).
+
+% equivalent_to(overlaps, intersection_of(ends_after_start_of, starts_before_end_of))
+(overlaps2(x,y) <-> ends_after_start_of2(x,y) & starts_before_end_of2(x,y)).
+
+% equivalent_to(started_by, intersection_of(ends_after_end_of, starts_on_start_of))
+(started_by2(x,y) <-> ends_after_end_of2(x,y) & starts_on_start_of2(x,y)).
+
+% equivalent_to(starts, intersection_of(ends_before_end_of, starts_on_start_of))
+(starts2(x,y) <-> ends_before_end_of2(x,y) & starts_on_start_of2(x,y)).
+
+% equivalent_to(upstream_adjacent_to, intersection_of(adjacent_to, upstream_of))
+(upstream_adjacent_to2(x,y) <-> adjacent_to2(x,y) & upstream_of2(x,y)).
+
+% equivalent_to(upstream_overlaps, intersection_of(overlaps, upstream_of))
+(upstream_overlaps2(x,y) <-> overlaps2(x,y) & upstream_of2(x,y)).
+
+end_of_list.
